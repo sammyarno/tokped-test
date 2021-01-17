@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { PokeSimple } from '../interfaces/Pokemon';
+import { PokeSimple, PokeStorageData } from '../interfaces/Pokemon';
 import ReduxStore from '../interfaces/ReduxStoreState';
 import { GlobalListParams } from '../interfaces/ResReqModel';
 import { fetchPokemons } from '../store/pokemon/actions';
@@ -64,7 +64,11 @@ const Home = (): ReactElement => {
                       <p className="name">{poke.name}</p>
                       <p className="status">
                         <small className="text-muted">
-                          Owned: 1
+                          Owned: {
+                            AccountState.data.filter((x: PokeStorageData) => x.name === poke.name).length > 0
+                              ? AccountState.data.filter((x: PokeStorageData) => x.name === poke.name)[0].nicknames.length
+                              : 0
+                          }
                         </small>
                       </p>
                     </div>
