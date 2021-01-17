@@ -1,3 +1,4 @@
+/* eslint-disable */
 import store from '..';
 import { setStore } from '../../helpers/Storage';
 import {
@@ -118,6 +119,13 @@ export const catchPokemon = (poke: string, nickname: string): PokemonActions => 
 
     if (selectedPokes.length !== 0) {
       selectedPokes[0].nicknames.push(nickname);
+    } else {
+      const temp: PokeStorageData = {
+        name: poke,
+        nicknames: [nickname]
+      };
+
+      selectedPokes.push(temp);
     }
 
     storage.data = temp.concat(selectedPokes[0]);
