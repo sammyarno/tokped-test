@@ -140,7 +140,7 @@ const Detail = (): ReactElement => {
                 <img src={PokeState.selected.image || ''} alt="thumbnail" className="image" />
               </div>
               <p>Nickname</p>
-              <input type="text" onChange={handleChangedInput} onKeyUp={handleKeyUpInput} />
+              <input type="text" autoFocus onChange={handleChangedInput} onKeyUp={handleKeyUpInput} />
               {
                 error && <p className="error"><small>{error}</small></p>
               }
