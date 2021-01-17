@@ -13,22 +13,15 @@ export const getStore = (): PokeStorage | null => {
   return result;
 };
 
+export const setStore = (data: PokeStorage): void => {
+  localStorage.setItem(storeName, JSON.stringify(data));
+};
+
 export const setDefaultStore = (): void => {
   const data: PokeStorage = {
     data: [],
     total: 0
   };
 
-  localStorage.setItem(storeName, JSON.stringify(data));
+  setStore(data);
 };
-
-// export const setCookie = (val): void => {
-//   const jwt = authDecrypt(token);
-
-//   const date = new Date(0);
-//   date.setUTCSeconds(jwt.exp);
-
-//   Cookies.set(authCookieName, token, {
-//     expires: date
-//   });
-// };

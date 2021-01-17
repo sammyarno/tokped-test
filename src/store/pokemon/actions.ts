@@ -1,11 +1,12 @@
 import store from '..';
+import { setStore } from '../../helpers/Storage';
 import {
-  PokeListMeta, Pokemon, PokeStat, PokeType
+  PokeListMeta, Pokemon, PokeStat, PokeStorageData, PokeType
 } from '../../interfaces/Pokemon';
 import { GlobalListParams } from '../../interfaces/ResReqModel';
 import { getPokemonDetail, getPokemons } from '../../utils/api';
 import {
-  ERROR, GET, GET_DETAIL, GET_DETAIL_LOADING, GET_LOADING, PokemonActions
+  ERROR, GET, GET_DETAIL, GET_DETAIL_LOADING, GET_LOADING, CATCH_POKEMON, PokemonActions, CATCH_LOADING
 } from './types';
 
 const dispatch = store.dispatch;
@@ -22,6 +23,11 @@ export const setGetLoading = (loading: boolean): PokemonActions => ({
 
 export const setGetDetailLoading = (loading: boolean): PokemonActions => ({
   type: GET_DETAIL_LOADING,
+  data: loading
+});
+
+export const setCatchLoading = (loading: boolean): PokemonActions => ({
+  type: CATCH_LOADING,
   data: loading
 });
 
@@ -79,4 +85,34 @@ export const fetchPokeDetail = async (name: string): Promise<PokemonActions> => 
   } finally {
     dispatch(setGetDetailLoading(false));
   }
+};
+
+export const checkSameNick = (nickname: string): boolean => {
+  const storage = store.getState().account;
+  let isError = false;
+
+  storage.data.map((x: PokeStorageData) => {
+    if (x.nickName === nickname) {
+      isError = true;
+    }
+
+    return x;
+  });
+
+  return isError;
+};
+
+export const catchPokemon = (poke: PokeStorageData): PokemonActions => {
+  const storage = store.getState().account;
+
+  if (!checkSameNick(poke.nickName)) {
+    storage.total += 1;
+    storage.data.push(poke);
+
+    setStore(storage);
+  }
+
+  return {
+    type: CATCH_POKEMON
+  };
 };

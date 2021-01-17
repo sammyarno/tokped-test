@@ -1,16 +1,24 @@
 import {
-  AccountActions, SET_STORE
+  AccountActions, ERROR, SET_STORE
 } from './types';
 import { AccountInitial } from '../../consts/ReduxInitialStore';
-import { PokeStorage } from '../../interfaces/Pokemon';
+import { AccountState } from '../../interfaces/ReduxStoreState';
 
 const accountReducer = (
   state = AccountInitial,
   action: AccountActions
-): PokeStorage => {
+): AccountState => {
   switch (action.type) {
+    case ERROR:
+      return {
+        ...state,
+        errorMessage: action.data
+      };
     case SET_STORE:
-      return action.data;
+      return {
+        ...state,
+        ...action.data
+      };
     default:
       return state;
   }

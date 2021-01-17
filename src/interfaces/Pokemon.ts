@@ -30,8 +30,10 @@ export interface Pokemon {
 
 export interface PokeStorage {
   total: number;
-  data: {
-    name: string;
-    nickName: string;
-  }[];
+  data: PokeStorageData[];
+}
+
+export interface PokeStorageData {
+  name: string;
+  nickName: string;
 }

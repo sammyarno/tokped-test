@@ -1,5 +1,12 @@
 import { getStore, setDefaultStore } from '../../helpers/Storage';
-import { AccountActions, SET_STORE } from './types';
+import {
+  AccountActions, ERROR, SET_STORE
+} from './types';
+
+export const setErrorMessage = (message: string): AccountActions => ({
+  type: ERROR,
+  data: message
+});
 
 export const setStorage = (): AccountActions => {
   const localStore = getStore();

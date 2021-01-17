@@ -1,6 +1,5 @@
 import { RouterState } from 'connected-react-router';
-import { PokeStorage } from '../interfaces/Pokemon';
-import ReduxStore, { PokemonState } from '../interfaces/ReduxStoreState';
+import ReduxStore, { AccountState, PokemonState } from '../interfaces/ReduxStoreState';
 
 export const RouterInitial: RouterState = {
   action: 'POP',
@@ -15,6 +14,7 @@ export const RouterInitial: RouterState = {
 export const PokemonInitial: PokemonState = {
   getLoading: false,
   getDetailLoading: false,
+  catchLoading: false,
   data: [],
   meta: {
     count: 0,
@@ -32,9 +32,10 @@ export const PokemonInitial: PokemonState = {
   errorMessage: ''
 };
 
-export const AccountInitial: PokeStorage = {
+export const AccountInitial: AccountState = {
   total: 0,
-  data: []
+  data: [],
+  errorMessage: ''
 };
 
 const RootInitial: ReduxStore = {

@@ -1,7 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 // import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import {
-  faBars, faChevronLeft, faChevronRight, faSpinner
+  faBars, faChevronLeft, faChevronRight, faSpinner, faTimes
 } from '@fortawesome/free-solid-svg-icons';
 // import {
 //   faStar as faStarReg
@@ -11,5 +11,6 @@ library.add(
   faBars,
   faChevronLeft,
   faChevronRight,
-  faSpinner
+  faSpinner,
+  faTimes
 );

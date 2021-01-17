@@ -1,5 +1,5 @@
 import {
-  PokemonActions, GET, GET_LOADING, ERROR, GET_DETAIL, GET_DETAIL_LOADING
+  PokemonActions, GET, GET_LOADING, ERROR, GET_DETAIL, GET_DETAIL_LOADING, CATCH_LOADING
 } from './types';
 import { PokemonState } from '../../interfaces/ReduxStoreState';
 import { PokemonInitial } from '../../consts/ReduxInitialStore';
@@ -18,6 +18,11 @@ const pokemonReducer = (
       return {
         ...state,
         getDetailLoading: action.data
+      };
+    case CATCH_LOADING:
+      return {
+        ...state,
+        catchLoading: action.data
       };
     case GET:
       return {

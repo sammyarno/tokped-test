@@ -1,9 +1,15 @@
-import React, { ReactElement, useCallback, useEffect } from 'react';
+/* eslint-disable */
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {
+  ReactElement, useCallback, useEffect, useState
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { PokeStat } from '../interfaces/Pokemon';
 import ReduxStore from '../interfaces/ReduxStoreState';
-import { fetchPokeDetail } from '../store/pokemon/actions';
+import { setErrorMessage } from '../store/account/actions';
+import accountReducer from '../store/account/reducer';
+import { catchPokemon, checkSameNick, fetchPokeDetail, setCatchLoading } from '../store/pokemon/actions';
 
 type Params = {
   name: string;
@@ -12,6 +18,9 @@ type Params = {
 const Detail = (): ReactElement => {
   const dispatch = useDispatch();
   const { name } = useParams<Params>();
+  const [error, setError] = useState('');
+  const [modal, setModal] = useState(false);
+  const [nickName, setNickName] = useState('');
   const PokeState = useSelector((state: ReduxStore) => state.pokemon);
 
   const getPokeDetail = useCallback(async () => {
@@ -23,8 +32,52 @@ const Detail = (): ReactElement => {
   }, [getPokeDetail]);
 
   const handleCatchClicked = (): void => {
-    console.log(Math.random() < 0.5);
+    const random = Math.random();
+    setError('');
+    dispatch(setCatchLoading(true));
+
+    setTimeout(() => {
+      if (random < 0.5) {
+        setError('Your pokemon has fleed, try again!');
+        dispatch(setCatchLoading(false));
+        return;
+      }
+
+      dispatch(setCatchLoading(false));
+
+      window.scrollTo({
+        behavior: 'smooth',
+        top: 0
+      });
+  
+      dispatch(setErrorMessage(''));
+      setModal(true);
+    }, 10000);
   };
+
+  const handleChangedInput = (e: any): void => {
+    setNickName(e.target.value)
+  };
+
+  const handleKeyUpInput = (e: any): void => {
+    if (e.keyCode === 13) {
+      handleCatchedPokemon();
+    }
+  }
+
+  const handleCatchedPokemon = async (): Promise<void> => {
+    setError('');
+
+    if (checkSameNick(nickName)) {
+      setError('Nickname has been registered');
+    } else {
+      dispatch(await catchPokemon({
+        name: PokeState.selected.name,
+        nickName
+      }));
+      setModal(false);
+    }
+  }
 
   const types = PokeState.selected.types.map((x) => x.name).join(', ');
 
@@ -63,10 +116,44 @@ const Detail = (): ReactElement => {
         </div>
       </div>
       <div className="extra">
-        <button className="catch-btn" type="button" onClick={handleCatchClicked}>
-          <h2>CATCH</h2>
+        {
+          error && (
+            <div className="alert">
+              {error}
+            </div>
+          )
+        }
+        <button className="catch-btn" type="button" onClick={handleCatchClicked} disabled={PokeState.catchLoading}>
+          <h2>
+            CATCH { PokeState.catchLoading && <FontAwesomeIcon icon="spinner" spin /> }
+          </h2>
         </button>
       </div>
+      
+      {/* Modal */}
+      {
+        modal && (
+          <div className="modal">
+            <div className="content">
+              <div className="close">
+                <FontAwesomeIcon icon="times" size="lg" onClick={() => setModal(false)} />
+              </div>
+              <h3>You've caught a {PokeState.selected.name} !</h3>
+              <div className="image-wrapper">
+                <img src={PokeState.selected.image || ''} alt="thumbnail" className="image" />
+              </div>
+              <p>Nickname</p>
+              <input type="text" onChange={handleChangedInput} onKeyUp={handleKeyUpInput} />
+              {
+                error && <p className="error"><small>{error}</small></p>
+              }
+              <button onClick={handleCatchedPokemon}>
+                <p><b>SAVE</b></p>
+              </button>
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 };
