@@ -1,5 +1,5 @@
 import {
-  PokemonActions, GET, GET_LOADING, ERROR
+  PokemonActions, GET, GET_LOADING, ERROR, GET_DETAIL, GET_DETAIL_LOADING
 } from './types';
 import { PokemonState } from '../../interfaces/ReduxStoreState';
 import { PokemonInitial } from '../../consts/ReduxInitialStore';
@@ -14,11 +14,21 @@ const cartReducer = (
         ...state,
         getLoading: action.data
       };
+    case GET_DETAIL_LOADING:
+      return {
+        ...state,
+        getDetailLoading: action.data
+      };
     case GET:
       return {
         ...state,
         data: action.data,
         meta: action.meta
+      };
+    case GET_DETAIL:
+      return {
+        ...state,
+        selected: action.data
       };
     case ERROR:
       return {

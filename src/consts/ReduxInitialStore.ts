@@ -20,7 +20,14 @@ export const PokemonInitial: PokemonState = {
     next: null,
     previous: null
   },
-  selected: null,
+  selected: {
+    id: 0,
+    name: '',
+    image: '',
+    moves: [],
+    stats: [],
+    types: []
+  },
   errorMessage: ''
 };
 

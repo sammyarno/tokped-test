@@ -1,5 +1,7 @@
 import store from '..';
-import { PokeListMeta } from '../../interfaces/Pokemon';
+import {
+  PokeListMeta, Pokemon, PokeStat, PokeType
+} from '../../interfaces/Pokemon';
 import { GlobalListParams } from '../../interfaces/ResReqModel';
 import { getPokemonDetail, getPokemons } from '../../utils/api';
 import {
@@ -52,11 +54,25 @@ export const fetchPokeDetail = async (name: string): Promise<PokemonActions> => 
 
   try {
     const res = await getPokemonDetail(name);
-    console.log(res);
+
+    const data: Pokemon = {
+      id: res.data.id,
+      name: res.data.name,
+      image: res.data.sprites.front_default,
+      moves: res.data.moves.map((x: any): string => x.move.name).sort(),
+      stats: res.data.stats.map((x: any): PokeStat => ({
+        name: x.stat.name,
+        value: x.base_stat
+      })),
+      types: res.data.types.map((x: any): PokeType => ({
+        slot: x.slot,
+        name: x.type.name
+      }))
+    };
 
     return {
       type: GET_DETAIL,
-      data: {}
+      data
     };
   } catch (err) {
     return setErrorMessage(err.response ? err.response.message : 'Failed get pokemon detail');

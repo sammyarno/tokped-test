@@ -1,12 +1,12 @@
 import { RouterState } from 'connected-react-router';
-import { PokeListMeta, PokeSimple } from './Pokemon';
+import { PokeListMeta, Pokemon, PokeSimple } from './Pokemon';
 
 export interface PokemonState {
   getLoading: boolean;
   getDetailLoading: boolean;
   data: PokeSimple[];
   meta: PokeListMeta;
-  selected: any;
+  selected: Pokemon;
   errorMessage: string;
 }
 
