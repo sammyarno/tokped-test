@@ -59,17 +59,17 @@ const Home = (): ReactElement => {
             ) : (
               <>
                 {
-               PokeState.data.map((poke: PokeSimple, index) => (
-                 <div className="item" key={index} role="presentation" onClick={() => handlePokemonClicked(poke.name)}>
-                   <p className="name">{poke.name}</p>
-                   <p className="status">
-                     <small className="text-muted">
-                       Owned: 1
-                     </small>
-                   </p>
-                 </div>
-               ))
-             }
+                  PokeState.data.map((poke: PokeSimple, index) => (
+                    <div className="item" key={index} role="presentation" onClick={() => handlePokemonClicked(poke.name)}>
+                      <p className="name">{poke.name}</p>
+                      <p className="status">
+                        <small className="text-muted">
+                          Owned: 1
+                        </small>
+                      </p>
+                    </div>
+                  ))
+                }
               </>
             )
         }
