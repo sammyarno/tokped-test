@@ -37,9 +37,10 @@ const Home = (): ReactElement => {
 
   return (
     <div className="home page">
-      <h2 className="title">
-        Pokémon List
-      </h2>
+      <div className="title">
+        <h2>Pokémon List</h2>
+        <small>Owned Total: 230</small>
+      </div>
       <div className="list">
         {
           PokeState.getLoading
