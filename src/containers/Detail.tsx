@@ -8,7 +8,6 @@ import { useParams } from 'react-router-dom';
 import { PokeStat } from '../interfaces/Pokemon';
 import ReduxStore from '../interfaces/ReduxStoreState';
 import { setErrorMessage } from '../store/account/actions';
-import accountReducer from '../store/account/reducer';
 import { catchPokemon, checkSameNick, fetchPokeDetail, setCatchLoading } from '../store/pokemon/actions';
 
 type Params = {
@@ -80,53 +79,64 @@ const Detail = (): ReactElement => {
 
   return (
     <div className="detail page">
-      <div className="image-wrapper">
-        <img src={PokeState.selected.image || ''} alt="thumbnail" className="image" />
-      </div>
-      <div className="title">
-        <h2>{PokeState.selected.name}</h2>
-        <p>{types}</p>
-      </div>
-      <div className="status section">
-        <h3>Status</h3>
-        <div className="list">
-          {
-            PokeState.selected.stats.map((status: PokeStat, index: number) => (
-              <div className="item" key={index}>
-                <p>{status.name}</p>
-                <p className="value"><b>{status.value}</b></p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-      <div className="moves section">
-        <h3>Moves</h3>
-        <div className="list">
-          {
-            PokeState.selected.moves.map((move: string, index: number) => (
-              <div className="item" key={index}>
-                <p>{move}</p>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-      <div className="extra">
-        {
-          error && (
-            <div className="alert">
-              {error}
+      {
+        PokeState.getDetailLoading
+        ? (
+          <div className="spinner-container">
+            <FontAwesomeIcon icon="spinner" size="2x" spin />
+          </div>
+        ) :
+        (
+          <>
+            <div className="image-wrapper">
+              <img src={PokeState.selected.image || ''} alt="thumbnail" className="image" />
             </div>
-          )
-        }
-        <button className="catch-btn" type="button" onClick={handleCatchClicked} disabled={PokeState.catchLoading}>
-          <h2>
-            CATCH { PokeState.catchLoading && <FontAwesomeIcon icon="spinner" spin /> }
-          </h2>
-        </button>
-      </div>
-      
+            <div className="title">
+              <h2>{PokeState.selected.name}</h2>
+              <p>{types}</p>
+            </div>
+            <div className="status section">
+              <h3>Status</h3>
+              <div className="list">
+                {
+                  PokeState.selected.stats.map((status: PokeStat, index: number) => (
+                    <div className="item" key={index}>
+                      <p>{status.name}</p>
+                      <p className="value"><b>{status.value}</b></p>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+            <div className="moves section">
+              <h3>Moves</h3>
+              <div className="list">
+                {
+                  PokeState.selected.moves.map((move: string, index: number) => (
+                    <div className="item" key={index}>
+                      <p>{move}</p>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+            <div className="extra">
+              {
+                error && (
+                  <div className="alert">
+                    {error}
+                  </div>
+                )
+              }
+              <button className="catch-btn" type="button" onClick={handleCatchClicked} disabled={PokeState.catchLoading}>
+                <h2>
+                  CATCH { PokeState.catchLoading && <FontAwesomeIcon icon="spinner" spin /> }
+                </h2>
+              </button>
+            </div>
+          </>
+        )
+      }
       {/* Modal */}
       {
         modal && (

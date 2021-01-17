@@ -1,4 +1,6 @@
 .detail {
+  @include spinner-container;
+  
   .image {
     width: 40%;
 

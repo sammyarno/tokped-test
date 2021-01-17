@@ -21,3 +21,9 @@
   align-items: center;
   justify-content: center;
 }
+
+@mixin spinner-container {
+  .spinner-container {
+    text-align: center;
+  }
+}

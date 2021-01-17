@@ -1,10 +1,7 @@
 .home {
   .list {
     @include list-container;
-
-    .spinner-container {
-      text-align: center;
-    }
+    @include spinner-container;
 
     .item {
       @include list-container-item;
