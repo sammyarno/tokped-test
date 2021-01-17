@@ -1,7 +1,7 @@
 import store from '..';
 import { PokeListMeta } from '../../interfaces/Pokemon';
 import { GlobalListParams } from '../../interfaces/ResReqModel';
-import { getPokemons } from '../../utils/Api';
+import { getPokemons } from '../../utils/api';
 import {
   ERROR, GET, GET_LOADING, PokemonActions
 } from './types';
