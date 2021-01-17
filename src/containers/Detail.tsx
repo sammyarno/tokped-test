@@ -52,7 +52,7 @@ const Detail = (): ReactElement => {
   
       dispatch(setErrorMessage(''));
       setModal(true);
-    }, 10000);
+    }, 2000);
   };
 
   const handleChangedInput = (e: any): void => {
@@ -68,13 +68,10 @@ const Detail = (): ReactElement => {
   const handleCatchedPokemon = async (): Promise<void> => {
     setError('');
 
-    if (checkSameNick(nickName)) {
+    if (checkSameNick(PokeState.selected.name, nickName)) {
       setError('Nickname has been registered');
     } else {
-      dispatch(await catchPokemon({
-        name: PokeState.selected.name,
-        nickName
-      }));
+      dispatch(await catchPokemon(PokeState.selected.name, nickName));
       setModal(false);
     }
   }

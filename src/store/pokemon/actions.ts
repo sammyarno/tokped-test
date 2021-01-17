@@ -87,28 +87,41 @@ export const fetchPokeDetail = async (name: string): Promise<PokemonActions> => 
   }
 };
 
-export const checkSameNick = (nickname: string): boolean => {
+export const checkSameNick = (poke: string, nickname: string): boolean => {
   const storage = store.getState().account;
   let isError = false;
 
-  storage.data.map((x: PokeStorageData) => {
-    if (x.nickName === nickname) {
+  const selectedPokes = storage.data.filter((x: PokeStorageData) => x.name === poke);
+
+  if (selectedPokes.length !== 0) {
+    if (selectedPokes[0].nicknames.includes(nickname)) {
       isError = true;
     }
-
-    return x;
-  });
+  }
 
   return isError;
 };
 
-export const catchPokemon = (poke: PokeStorageData): PokemonActions => {
+export const catchPokemon = (poke: string, nickname: string): PokemonActions => {
   const storage = store.getState().account;
 
-  if (!checkSameNick(poke.nickName)) {
-    storage.total += 1;
-    storage.data.push(poke);
+  if (storage.data.length === 0) {
+    const temp: PokeStorageData = {
+      name: poke,
+      nicknames: [nickname]
+    };
 
+    storage.data = [temp];
+    setStore(storage);
+  } else if (!checkSameNick(poke, nickname)) {
+    const temp = storage.data.filter((x: PokeStorageData) => x.name !== poke);
+    const selectedPokes = storage.data.filter((x: PokeStorageData) => x.name === poke);
+
+    if (selectedPokes.length !== 0) {
+      selectedPokes[0].nicknames.push(nickname);
+    }
+
+    storage.data = temp.concat(selectedPokes[0]);
     setStore(storage);
   }
 

@@ -35,5 +35,5 @@ export interface PokeStorage {
 
 export interface PokeStorageData {
   name: string;
-  nickName: string;
+  nicknames: string[];
 }
