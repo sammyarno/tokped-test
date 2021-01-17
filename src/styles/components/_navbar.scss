@@ -1,0 +1,19 @@
+.navbar {
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5rem;
+  background-color: white;
+  box-shadow: $box-shadow;
+
+  .menu {
+    img {
+      width: 5rem;
+    }
+
+    a {
+      color: $base !important;
+    }
+  }
+}

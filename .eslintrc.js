@@ -72,7 +72,8 @@ module.exports =  {
     'import/no-cycle': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
     'react/jsx-one-expression-per-line': 'off',
-    "@typescript-eslint/ban-types": 'off'
+    "@typescript-eslint/ban-types": 'off',
+    "consistent-return": 'off'
   },
   settings:  {
     react:  {
@@ -112,7 +113,8 @@ module.exports =  {
         }],
         'no-underscore-dangle': ['error', { 
             'allow': ['_id'] 
-        }]
+        }],
+        "consistent-return": 'off'
       }
     }
   ]

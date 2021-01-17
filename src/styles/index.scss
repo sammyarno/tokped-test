@@ -1,0 +1,39 @@
+@import './variables';
+
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: $accent-1;
+  text-decoration: none;
+}
+
+p, h1, h2, h3, h4, h5 ,h6 {
+  margin: 0;
+}
+
+.app {
+  position: relative;
+  font-weight: 200;
+  color: $accent-1;
+  background-color: $base;
+}
+
+.page {
+  padding: 1rem;
+  min-height: calc(100vh - 52px);
+
+  &>.title {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@import './components/index.scss';
+@import './containers/index.scss';

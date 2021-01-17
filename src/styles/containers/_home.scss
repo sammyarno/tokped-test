@@ -1,0 +1,59 @@
+.home {
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    margin-bottom: 2rem;
+
+    .spinner-container {
+      text-align: center;
+    }
+
+    .item {
+      cursor: pointer;
+      border: 1px solid $accent-2;
+      border-radius: .25rem;
+      padding: .5rem;
+
+      p {
+        margin: 0;
+      }
+
+      .name {
+        margin-bottom: .25rem;
+        text-transform: capitalize;
+      }
+
+      .status {
+        text-align: right;
+        font-size: .875rem;
+      }
+
+      &:hover, &:focus {
+        background-color: $accent-2;
+        color: $base;
+      }
+
+    }
+  }
+
+  .extra {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .prev, .next {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      margin: 0 1rem;
+      padding: .75rem 2rem;
+      background-color: $accent-1;
+
+      &:disabled {
+        background-color: rgba(16, 16, 16, 0.3);
+      }
+    }
+  }
+}
