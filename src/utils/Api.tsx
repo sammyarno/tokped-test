@@ -8,3 +8,7 @@ export const getPokemons = async (params: GlobalListParams): Promise<AxiosRespon
   const result = await axios.get(`${API}/pokemon`, { params });
   return result;
 };
+export const getPokemonDetail = async (name: string): Promise<AxiosResponse> => {
+  const result = await axios.get(`${API}/pokemon/${name}`);
+  return result;
+};

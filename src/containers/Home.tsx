@@ -1,7 +1,9 @@
-/* eslint-disable */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, {
+  ReactElement, useCallback, useEffect, useState
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { PokeSimple } from '../interfaces/Pokemon';
 import ReduxStore from '../interfaces/ReduxStoreState';
 import { GlobalListParams } from '../interfaces/ResReqModel';
@@ -10,6 +12,7 @@ import { extractUrl } from '../utils/Formatter';
 
 const Home = (): ReactElement => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const PokeState = useSelector((state: ReduxStore) => state.pokemon);
 
   const [params, setParams] = useState<GlobalListParams>({
@@ -18,22 +21,26 @@ const Home = (): ReactElement => {
   });
 
   const getPokemons = useCallback(async () => {
-    dispatch(await fetchPokemons(params))
+    dispatch(await fetchPokemons(params));
   }, [dispatch, params]);
 
   useEffect(() => {
     getPokemons();
   }, [getPokemons]);
-  
+
   const handlePrevClicked = (): void => {
     setParams(extractUrl(PokeState.meta.previous || ''));
     getPokemons();
-  }
+  };
 
   const handleNextClicked = (): void => {
     setParams(extractUrl(PokeState.meta.next || ''));
     getPokemons();
-  }
+  };
+
+  const handlePokemonClicked = async (name: string): Promise<void> => {
+    history.push(`/pokemon/${name}`);
+  };
 
   return (
     <div className="home page">
@@ -44,15 +51,15 @@ const Home = (): ReactElement => {
       <div className="list">
         {
           PokeState.getLoading
-          ? (
-            <div className="spinner-container">
-              <FontAwesomeIcon icon="spinner" size="2x" spin />
-            </div>
-          ) : (
-            <>
-             {
+            ? (
+              <div className="spinner-container">
+                <FontAwesomeIcon icon="spinner" size="2x" spin />
+              </div>
+            ) : (
+              <>
+                {
                PokeState.data.map((poke: PokeSimple, index) => (
-                 <div className="item" key={index}>
+                 <div className="item" key={index} role="presentation" onClick={() => handlePokemonClicked(poke.name)}>
                    <p className="name">{poke.name}</p>
                    <p className="status">
                      <small className="text-muted">
@@ -62,20 +69,20 @@ const Home = (): ReactElement => {
                  </div>
                ))
              }
-            </>
-          )
+              </>
+            )
         }
       </div>
       <div className="extra">
-        <button className="prev" disabled={!PokeState.meta.previous} onClick={handlePrevClicked}>
+        <button className="prev" type="button" disabled={!PokeState.meta.previous} onClick={handlePrevClicked}>
           <FontAwesomeIcon icon="chevron-left" size="2x" />
         </button>
-        <button className="next" disabled={!PokeState.meta.next} onClick={handleNextClicked}>
+        <button className="next" type="button" disabled={!PokeState.meta.next} onClick={handleNextClicked}>
           <FontAwesomeIcon icon="chevron-right" size="2x" />
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Home;

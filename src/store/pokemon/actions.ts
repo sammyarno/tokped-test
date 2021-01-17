@@ -1,9 +1,9 @@
 import store from '..';
 import { PokeListMeta } from '../../interfaces/Pokemon';
 import { GlobalListParams } from '../../interfaces/ResReqModel';
-import { getPokemons } from '../../utils/api';
+import { getPokemonDetail, getPokemons } from '../../utils/api';
 import {
-  ERROR, GET, GET_LOADING, PokemonActions
+  ERROR, GET, GET_DETAIL, GET_DETAIL_LOADING, GET_LOADING, PokemonActions
 } from './types';
 
 const dispatch = store.dispatch;
@@ -15,6 +15,11 @@ export const setErrorMessage = (message: string): PokemonActions => ({
 
 export const setGetLoading = (loading: boolean): PokemonActions => ({
   type: GET_LOADING,
+  data: loading
+});
+
+export const setGetDetailLoading = (loading: boolean): PokemonActions => ({
+  type: GET_DETAIL_LOADING,
   data: loading
 });
 
@@ -39,5 +44,23 @@ export const fetchPokemons = async (params: GlobalListParams): Promise<PokemonAc
     return setErrorMessage(err.response ? err.response.message : 'Failed get pokemons');
   } finally {
     dispatch(setGetLoading(false));
+  }
+};
+
+export const fetchPokeDetail = async (name: string): Promise<PokemonActions> => {
+  dispatch(setGetDetailLoading(true));
+
+  try {
+    const res = await getPokemonDetail(name);
+    console.log(res);
+
+    return {
+      type: GET_DETAIL,
+      data: {}
+    };
+  } catch (err) {
+    return setErrorMessage(err.response ? err.response.message : 'Failed get pokemon detail');
+  } finally {
+    dispatch(setGetDetailLoading(false));
   }
 };
