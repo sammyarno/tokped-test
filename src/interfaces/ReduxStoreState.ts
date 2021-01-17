@@ -1,5 +1,7 @@
 import { RouterState } from 'connected-react-router';
-import { PokeListMeta, Pokemon, PokeSimple } from './Pokemon';
+import {
+  PokeListMeta, Pokemon, PokeSimple, PokeStorage
+} from './Pokemon';
 
 export interface PokemonState {
   getLoading: boolean;
@@ -13,4 +15,5 @@ export interface PokemonState {
 export default interface ReduxStore {
   router: RouterState;
   pokemon: PokemonState;
+  account: PokeStorage;
 }

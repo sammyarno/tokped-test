@@ -13,6 +13,7 @@ export interface PokeType {
   slot: number;
   name: string;
 }
+
 export interface PokeStat {
   name: string;
   value: number;
@@ -25,4 +26,12 @@ export interface Pokemon {
   moves: string[];
   stats: PokeStat[];
   image: string;
+}
+
+export interface PokeStorage {
+  total: number;
+  data: {
+    name: string;
+    nickName: string;
+  }[];
 }

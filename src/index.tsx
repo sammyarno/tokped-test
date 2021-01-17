@@ -9,6 +9,9 @@ import App from './containers/App';
 import './plugins/FontAwesome';
 
 import './styles/index.scss';
+import { setStorage } from './store/account/actions';
+
+store.dispatch(setStorage());
 
 ReactDOM.render(
   <Provider store={store as any}>

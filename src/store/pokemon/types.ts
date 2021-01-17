@@ -1,5 +1,7 @@
 import { Action } from 'redux';
-import { PokeListMeta, Pokemon, PokeSimple } from '../../interfaces/Pokemon';
+import {
+  PokeListMeta, Pokemon, PokeSimple
+} from '../../interfaces/Pokemon';
 
 export const ANY = '@pokemon/ANY';
 export const GET_LOADING = '@@pokemon/GET_LOADING';
@@ -32,7 +34,6 @@ interface GetDEtailAction extends Action {
   type: typeof GET_DETAIL;
   data: Pokemon;
 }
-
 interface ErrorAction extends Action {
   type: typeof ERROR;
   data: string;

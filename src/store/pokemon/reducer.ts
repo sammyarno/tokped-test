@@ -4,7 +4,7 @@ import {
 import { PokemonState } from '../../interfaces/ReduxStoreState';
 import { PokemonInitial } from '../../consts/ReduxInitialStore';
 
-const cartReducer = (
+const pokemonReducer = (
   state = PokemonInitial,
   action: PokemonActions
 ): PokemonState => {
@@ -40,4 +40,4 @@ const cartReducer = (
   }
 };
 
-export default cartReducer;
+export default pokemonReducer;
