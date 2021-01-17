@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/tokped-test/static/css/main.62718e77.chunk.css",
+    "main.js": "/tokped-test/static/js/main.2129043f.chunk.js",
+    "runtime-main.js": "/tokped-test/static/js/runtime-main.8a028f4d.js",
+    "static/js/2.ef3cc33f.chunk.js": "/tokped-test/static/js/2.ef3cc33f.chunk.js",
+    "index.html": "/tokped-test/index.html",
+    "static/js/2.ef3cc33f.chunk.js.LICENSE.txt": "/tokped-test/static/js/2.ef3cc33f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8a028f4d.js",
+    "static/js/2.ef3cc33f.chunk.js",
+    "static/css/main.62718e77.chunk.css",
+    "static/js/main.2129043f.chunk.js"
+  ]
+}
