@@ -1,20 +1,9 @@
 .mypoke {
-
   .list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1rem;
-    margin-bottom: 2rem;
+    @include list-container;
   
     .item {
-      cursor: pointer;
-      border: 1px solid $accent-2;
-      border-radius: .25rem;
-      padding: .5rem;
-  
-      p {
-        margin: 0;
-      }
+      @include list-container-item;
   
       .nickname {
         margin-bottom: .25rem;

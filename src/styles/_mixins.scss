@@ -1,0 +1,23 @@
+@mixin list-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@mixin list-container-item {
+  cursor: pointer;
+  border: 1px solid $accent-2;
+  border-radius: .25rem;
+  padding: .5rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

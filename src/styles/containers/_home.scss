@@ -1,23 +1,13 @@
 .home {
   .list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 1rem;
-    margin-bottom: 2rem;
+    @include list-container;
 
     .spinner-container {
       text-align: center;
     }
 
     .item {
-      cursor: pointer;
-      border: 1px solid $accent-2;
-      border-radius: .25rem;
-      padding: .5rem;
-
-      p {
-        margin: 0;
-      }
+      @include list-container-item;
 
       .name {
         margin-bottom: .25rem;
@@ -38,14 +28,10 @@
   }
 
   .extra {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
 
     .prev, .next {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flex-center;
       border: none;
       margin: 0 1rem;
       padding: .75rem 2rem;
