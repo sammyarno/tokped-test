@@ -14,6 +14,7 @@ const Home = (): ReactElement => {
   const dispatch = useDispatch();
   const history = useHistory();
   const PokeState = useSelector((state: ReduxStore) => state.pokemon);
+  const AccountState = useSelector((state: ReduxStore) => state.account);
 
   const [params, setParams] = useState<GlobalListParams>({
     limit: 24,
@@ -46,7 +47,7 @@ const Home = (): ReactElement => {
     <div className="home page">
       <div className="title">
         <h2>Pokémon List</h2>
-        <small>Owned Total: 230</small>
+        <small>Owned Total: {AccountState.total}</small>
       </div>
       <div className="list">
         {
