@@ -112,7 +112,6 @@ export const catchPokemon = (poke: string, nickname: string): PokemonActions => 
     };
 
     storage.data = [temp];
-    setStore(storage);
   } else if (!checkSameNick(poke, nickname)) {
     const temp = storage.data.filter((x: PokeStorageData) => x.name !== poke);
     const selectedPokes = storage.data.filter((x: PokeStorageData) => x.name === poke);
@@ -122,8 +121,10 @@ export const catchPokemon = (poke: string, nickname: string): PokemonActions => 
     }
 
     storage.data = temp.concat(selectedPokes[0]);
-    setStore(storage);
   }
+
+  storage.total += 1;
+  setStore(storage);
 
   return {
     type: CATCH_POKEMON
