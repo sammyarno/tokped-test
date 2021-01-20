@@ -43,5 +43,14 @@ button {
   }
 }
 
+.alert {
+  text-align: center;
+  border: 1px solid $accent-2;
+  background-color: $accent-1;
+  border-radius: .25rem;
+  padding: .5rem 2rem;
+  color: $base;
+}
+
 @import './components/index.scss';
 @import './containers/index.scss';

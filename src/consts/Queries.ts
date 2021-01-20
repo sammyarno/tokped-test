@@ -14,3 +14,32 @@ export const GET_POKEMONS = gql`
     }
   }
 `;
+
+export const GET_POKEMON = gql`
+  query pokemon($name: String!) {
+    pokemon(name: $name) {
+      id
+      name
+      image: sprites {
+        front_default
+      }
+      moves {
+        move {
+          name
+        }
+      }
+      types {
+        slot
+        type {
+          name
+        }
+      }
+      statuses: stats {
+        value: base_stat
+        stat {
+          name
+        }
+      }
+    }
+  }
+`;

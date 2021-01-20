@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {
   ReactElement, useEffect, useState
@@ -6,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import { GET_POKEMONS } from '../consts/Queries';
-import { PokeGql, PokeSimpleGql, PokeStorageData } from '../interfaces/Pokemon';
+import { PokeListGql, PokeSimpleGql, PokeStorageData } from '../interfaces/Pokemon';
 import ReduxStore from '../interfaces/ReduxStoreState';
 import { GlobalListParams } from '../interfaces/ResReqModel';
 import { extractUrl } from '../utils/Formatter';
@@ -18,7 +19,7 @@ const Home = (): ReactElement => {
     offset: 0
   });
   const AccountState = useSelector((state: ReduxStore) => state.account);
-  const [getPokes, { loading, data, error }] = useLazyQuery<PokeGql, any>(GET_POKEMONS, {
+  const [getPokes, { loading, data, error }] = useLazyQuery<PokeListGql, any>(GET_POKEMONS, {
     variables: {
       limit: params.limit,
       offset: params.offset
@@ -53,9 +54,13 @@ const Home = (): ReactElement => {
         {
           loading
             ? (
-              <div className="spinner-container">
-                <FontAwesomeIcon icon="spinner" size="2x" spin />
-              </div>
+              <>
+                <div></div>
+                <div className="spinner-container text-center">
+                  <FontAwesomeIcon icon="spinner" size="2x" spin />
+                </div>
+                <div></div>
+              </>
             ) : (
               <>
                 {
