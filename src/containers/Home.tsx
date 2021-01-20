@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {
   ReactElement, useEffect, useState
@@ -55,11 +54,11 @@ const Home = (): ReactElement => {
           loading
             ? (
               <>
-                <div></div>
+                <div />
                 <div className="spinner-container text-center">
                   <FontAwesomeIcon icon="spinner" size="2x" spin />
                 </div>
-                <div></div>
+                <div />
               </>
             ) : (
               <>
