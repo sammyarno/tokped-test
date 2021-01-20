@@ -1,17 +1,13 @@
-/* eslint-disable */
 import { useLazyQuery } from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {
   ReactElement, useCallback, useEffect, useState
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { GET_POKEMON } from '../consts/Queries';
-import { PokeGqlMove, PokeGqlStatus, PokeStat } from '../interfaces/Pokemon';
-import ReduxStore from '../interfaces/ReduxStoreState';
-import { setErrorMessage } from '../store/account/actions';
-import { catchPokemon, checkSameNick, fetchPokeDetail, setCatchLoading } from '../store/pokemon/actions';
-import { PokeGql } from '../interfaces/Pokemon';
+import { PokeGql, PokeGqlMove, PokeGqlStatus } from '../interfaces/Pokemon';
+import { catchPokemon, checkSameNick, fetchPokeDetail } from '../store/pokemon/actions';
 
 type Params = {
   name: string;
@@ -60,21 +56,11 @@ const Detail = (): ReactElement => {
         behavior: 'smooth',
         top: 0
       });
-  
+
       setErrorMessage('');
       setModal(true);
     }, 2000);
   };
-
-  const handleChangedInput = (e: any): void => {
-    setNickName(e.target.value)
-  };
-
-  const handleKeyUpInput = (e: any): void => {
-    if (e.keyCode === 13) {
-      handleCatchedPokemon();
-    }
-  }
 
   const handleCatchedPokemon = async (): Promise<void> => {
     setErrorMessage('');
@@ -87,10 +73,20 @@ const Detail = (): ReactElement => {
 
       setTimeout(() => {
         setSuccessMessage('');
-      }, 3000)
+      }, 3000);
       setModal(false);
     }
-  }
+  };
+
+  const handleChangedInput = (e: any): void => {
+    setNickName(e.target.value);
+  };
+
+  const handleKeyUpInput = (e: any): void => {
+    if (e.keyCode === 13) {
+      handleCatchedPokemon();
+    }
+  };
 
   const types = data?.pokemon.types.map((x) => x.type.name).join(', ');
 
@@ -179,7 +175,7 @@ const Detail = (): ReactElement => {
               <div className="close">
                 <FontAwesomeIcon icon="times" size="lg" onClick={() => setModal(false)} />
               </div>
-              <h3>You've caught a {name} !</h3>
+              <h3>You&apos;ve caught a {name} !</h3>
               <div className="image-wrapper">
                 <img src={data?.pokemon.image.front_default || ''} alt="thumbnail" className="image" />
               </div>
@@ -188,7 +184,7 @@ const Detail = (): ReactElement => {
               {
                 errorMessage && <p className="error"><small>{errorMessage}</small></p>
               }
-              <button onClick={handleCatchedPokemon}>
+              <button type="button" onClick={handleCatchedPokemon}>
                 <p><b>SAVE</b></p>
               </button>
             </div>
