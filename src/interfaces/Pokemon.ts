@@ -9,6 +9,21 @@ export interface PokeListMeta {
   previous: string | null;
 }
 
+export interface PokeSimpleGql extends PokeSimple {
+  image: string;
+}
+
+export interface PokeGqlData {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: PokeSimpleGql[];
+}
+
+export interface PokeGql {
+  pokemons: PokeGqlData;
+}
+
 export interface PokeType {
   slot: number;
   name: string;
