@@ -1,42 +1,42 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {
-  ReactElement, useCallback, useEffect, useState
+  ReactElement, useEffect, useState
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { PokeSimple, PokeStorageData } from '../interfaces/Pokemon';
+import { useLazyQuery } from '@apollo/client';
+import { GET_POKEMONS } from '../consts/Queries';
+import { PokeListGql, PokeSimpleGql, PokeStorageData } from '../interfaces/Pokemon';
 import ReduxStore from '../interfaces/ReduxStoreState';
 import { GlobalListParams } from '../interfaces/ResReqModel';
-import { fetchPokemons } from '../store/pokemon/actions';
 import { extractUrl } from '../utils/Formatter';
 
 const Home = (): ReactElement => {
-  const dispatch = useDispatch();
   const history = useHistory();
-  const PokeState = useSelector((state: ReduxStore) => state.pokemon);
-  const AccountState = useSelector((state: ReduxStore) => state.account);
-
   const [params, setParams] = useState<GlobalListParams>({
     limit: 24,
     offset: 0
   });
-
-  const getPokemons = useCallback(async () => {
-    dispatch(await fetchPokemons(params));
-  }, [dispatch, params]);
+  const AccountState = useSelector((state: ReduxStore) => state.account);
+  const [getPokes, { loading, data, error }] = useLazyQuery<PokeListGql, any>(GET_POKEMONS, {
+    variables: {
+      limit: params.limit,
+      offset: params.offset
+    }
+  });
 
   useEffect(() => {
-    getPokemons();
-  }, [getPokemons]);
+    getPokes();
+  }, [getPokes]);
 
   const handlePrevClicked = (): void => {
-    setParams(extractUrl(PokeState.meta.previous || ''));
-    getPokemons();
+    setParams(extractUrl(data?.pokemons.previous || ''));
+    getPokes();
   };
 
   const handleNextClicked = (): void => {
-    setParams(extractUrl(PokeState.meta.next || ''));
-    getPokemons();
+    setParams(extractUrl(data?.pokemons.next || ''));
+    getPokes();
   };
 
   const handlePokemonClicked = async (name: string): Promise<void> => {
@@ -51,38 +51,56 @@ const Home = (): ReactElement => {
       </div>
       <div className="list">
         {
-          PokeState.getLoading
+          loading
             ? (
-              <div className="spinner-container">
-                <FontAwesomeIcon icon="spinner" size="2x" spin />
-              </div>
+              <>
+                <div />
+                <div className="spinner-container text-center">
+                  <FontAwesomeIcon icon="spinner" size="2x" spin />
+                </div>
+                <div />
+              </>
             ) : (
               <>
                 {
-                  PokeState.data.map((poke: PokeSimple, index) => (
-                    <div className="item" key={index} role="presentation" onClick={() => handlePokemonClicked(poke.name)}>
-                      <p className="name">{poke.name}</p>
-                      <p className="status">
-                        <small className="text-muted">
-                          Owned: {
-                            AccountState.data.filter((x: PokeStorageData) => x.name === poke.name).length > 0
-                              ? AccountState.data.filter((x: PokeStorageData) => x.name === poke.name)[0].nicknames.length
-                              : 0
-                          }
-                        </small>
-                      </p>
-                    </div>
-                  ))
+                  !data || error
+                    ? (
+                      <>
+                        <p className="text-center text-danger">Fetch Error</p>
+                      </>
+                    ) : (
+                      <>
+                        {
+                        data.pokemons.results.map((poke: PokeSimpleGql, index) => (
+                          <div className="item" key={index} role="presentation" onClick={() => handlePokemonClicked(poke.name)}>
+                            <div className="image-wrapper">
+                              <img src={poke.image} alt="poke" />
+                            </div>
+                            <p className="name">{poke.name}</p>
+                            <p className="status">
+                              <small className="text-muted">
+                                Owned: {
+                                  AccountState.data.filter((x: PokeStorageData) => x.name === poke.name).length > 0
+                                    ? AccountState.data.filter((x: PokeStorageData) => x.name === poke.name)[0].nicknames.length
+                                    : 0
+                                }
+                              </small>
+                            </p>
+                          </div>
+                        ))
+                      }
+                      </>
+                    )
                 }
               </>
             )
         }
       </div>
       <div className="extra">
-        <button className="prev" type="button" disabled={!PokeState.meta.previous} onClick={handlePrevClicked}>
+        <button className="prev" type="button" disabled={!data?.pokemons.previous} onClick={handlePrevClicked}>
           <FontAwesomeIcon icon="chevron-left" size="2x" />
         </button>
-        <button className="next" type="button" disabled={!PokeState.meta.next} onClick={handleNextClicked}>
+        <button className="next" type="button" disabled={!data?.pokemons.next} onClick={handleNextClicked}>
           <FontAwesomeIcon icon="chevron-right" size="2x" />
         </button>
       </div>
