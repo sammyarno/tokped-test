@@ -40,7 +40,7 @@ const Home = (): ReactElement => {
   };
 
   const handlePokemonClicked = async (name: string): Promise<void> => {
-    history.push(`/pokemon/${name}`);
+    history.push(`/tokped-test/pokemon/${name}`);
   };
 
   return (

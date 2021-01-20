@@ -9,7 +9,7 @@ const Account = (): ReactElement => {
   const AccountState = useSelector((state: ReduxStore) => state.account);
 
   const handlePokemonClicked = async (name: string): Promise<void> => {
-    history.push(`/pokemon/${name}`);
+    history.push(`/tokped-test/pokemon/${name}`);
   };
 
   return (
