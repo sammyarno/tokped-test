@@ -73,7 +73,8 @@ module.exports =  {
     'jsx-a11y/anchor-is-valid': 'off',
     'react/jsx-one-expression-per-line': 'off',
     "@typescript-eslint/ban-types": 'off',
-    "consistent-return": 'off'
+    "consistent-return": 'off',
+    "jsx-a11y/no-autofocus": 'off'
   },
   settings:  {
     react:  {
@@ -114,7 +115,8 @@ module.exports =  {
         'no-underscore-dangle': ['error', { 
             'allow': ['_id'] 
         }],
-        "consistent-return": 'off'
+        "consistent-return": 'off',
+        "jsx-a11y/no-autofocus": 'off'
       }
     }
   ]

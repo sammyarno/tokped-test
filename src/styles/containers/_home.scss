@@ -6,13 +6,20 @@
     .item {
       @include list-container-item;
 
+      .image {
+        &-wrapper {
+          text-align: center;
+        }
+      }
+
       .name {
+        text-align: center;
         margin-bottom: .25rem;
         text-transform: capitalize;
       }
 
       .status {
-        text-align: right;
+        text-align: center;
         font-size: .875rem;
       }
 
